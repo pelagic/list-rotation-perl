@@ -112,8 +112,21 @@ List::Rotation - Loop (Cycle, Alternate or Toggle) through a list of values via 
     my @array = qw( A B C );
 
     my $first_cycle  = List::Rotation::Cycle->new(@array);
-    my $second_cycle = List::Rotation::Cycle->new(@array);  ##  the same object is returned as above
 
+    print $first_cycle->next;  ## prints A
+    print $first_cycle->next;  ## prints B
+    print $first_cycle->next;  ## prints C
+    print $first_cycle->next;  ## prints A, looping back to beginning
+    print $first_cycle->next;  ## prints B
+    print $first_cycle->next;  ## prints C
+
+    print $first_cycle->prev;  ## prints B, going back
+    print $first_cycle->prev;  ## prints A, going back
+    print $first_cycle->prev;  ## prints C, looping forward to last
+    print $first_cycle->curr;  ## prints C, at current position
+
+    my $second_cycle = List::Rotation::Cycle->new(@array);  ##  the same object is returned as above
+    $first_cycle->reset;       ## reset position
     print $first_cycle->next;  ## prints A
     print $second_cycle->next; ## prints B
     print $first_cycle->next;  ## prints C
@@ -138,10 +151,11 @@ List::Rotation - Loop (Cycle, Alternate or Toggle) through a list of values via 
 
 Use C<List::Rotation> to loop through a list of values.
 Once you get to the end of the list, you go back to the beginning.
+Alternatively you can walk backwards through your list of values.
 
 C<List::Rotation> is implemented as a Singleton Pattern. You always just
-get 1 (the very same) Rotation object even if you use the C<new> method several times
-with the same set of parameters.
+get 1 (the very same) Rotation object if you use the C<new> method several times
+with the exact same set of parameters.
 This is done by using C<Memoize> on the C<new> method. It returns the same object
 for every use of C<new> that comes with the same list of parameters.
 
@@ -173,11 +187,19 @@ Create a Cycle object for the list of values in the list.
 
 =item next
 
-Return the next element.  This method is implemented as a closure.
+Return the next element.
+
+=item prev
+
+Return the previous element.
+
+=item curr
+
+Return the element at the current position.
 
 =item reset
 
-Reset the list to the beginning; the following call of C<next> will return the first item of the list again.  This method is implemented as a closure.
+Reset the list to the beginning; the following call of C<next> will return the first item of the list again.
 
 =back
 
@@ -215,7 +237,7 @@ Imre Saling, C<< <pelagicatcpandotorg> >>
 
 =head1 COPYRIGHT and LICENSE
 
-Copyright 2007, Imre Saling, All rights reserved.
+Copyright 2010, Imre Saling, All rights reserved.
 
 This software is available under the same terms as perl.
 

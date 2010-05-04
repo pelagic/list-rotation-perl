@@ -1,21 +1,23 @@
 --- #YAML:1.0
-name:                List-Rotation
-version:             1.009
-abstract:            Loop (Cycle, Alternate or Toggle) through a list of values via a singleton object implemented as closure.
-license:             perl
-author:              
+name:               List-Rotation
+version:            1.010
+abstract:           Loop (Cycle, Alternate or Toggle) through a list of values via a singleton object implemented as closure.
+author:
     - pelagic
-generated_by:        ExtUtils::MakeMaker version 6.42
-distribution_type:   module
-requires:     
-    Memoize:                       0
-    Carp:                          0
-    warnings:                      0
+license:            perl
+distribution_type:  module
+configure_requires:
+    ExtUtils::MakeMaker:  0
 build_requires:
-    Test::More:                    0
-    Module::Signature:             0
-    Test::Pod:                     0
-    Test::Pod::Coverage:           0
+    ExtUtils::MakeMaker:  0
+requires:
+    Memoize:     0
+    Test::More:  0
+no_index:
+    directory:
+        - t
+        - inc
+generated_by:       ExtUtils::MakeMaker version 6.55_02
 meta-spec:
-    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
-    version: 1.3
+    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:  1.4
