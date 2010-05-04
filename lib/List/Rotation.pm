@@ -1,6 +1,6 @@
 package List::Rotation;
-use vars qw( $VERSION );
-$VERSION = sprintf "%d.%03d", q$Revision: 1.9 $ =~ m/ (\d+) \.? (\d+)? /x;
+use 5.006;
+our $VERSION = '1.010';
 
 package List::Rotation::Cycle;
 use strict;
@@ -17,17 +17,27 @@ sub new {
         Carp::croak ("Incorrect number of arguments; must be >= 1.");
     } unless 1 <= @_;
     my $r_values = [ @_ ];
-    my $next = 0;
+    my $position = undef;
     my $length = @$r_values;
 
     my $method = {
         _next => sub {
-            my $i = $next % $length;
-            $next++;
+            $position = defined $position ? ++$position : 0;
+            my $i = $position % $length;
+            return $r_values->[$i];
+        },
+        _prev => sub {
+            $position = defined $position ? --$position : -1;
+            my $i = $position % $length;
+            return $r_values->[$i];
+        },
+        _curr => sub {
+            return unless defined $position;
+            my $i = $position % $length;
             return $r_values->[$i];
         },
         _reset => sub {
-            $next = 0;
+            $position = undef;
         },
     };
 
@@ -40,6 +50,8 @@ sub new {
 }
 
 sub next  { my $self = shift; &{ $self }( '_next'  ); }
+sub prev  { my $self = shift; &{ $self }( '_prev'  ); }
+sub curr  { my $self = shift; &{ $self }( '_curr'  ); }
 sub reset { my $self = shift; &{ $self }( '_reset' ); }
 
 #-------------------------------------------------------------------------------

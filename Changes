@@ -19,3 +19,6 @@ Revision history for Perl extension List::Rotation
         * Upgraded META.yml to META-spec-v1.3
         * Added a example file (without a real example)
 
+1.010
+        * Added methods 'prev' and 'curr'
+
